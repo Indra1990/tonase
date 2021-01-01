@@ -10,7 +10,7 @@ class LogActivitiesController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api');
+        $this->middleware('jwt.verify');
     }    
 
     public function index()

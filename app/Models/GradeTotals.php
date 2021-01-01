@@ -15,4 +15,9 @@ class GradeTotals extends Model
     protected $fillable = [
         'idusers', 'total'
     ];
+
+    public function transaction()
+    {
+        return $this->hasMany('App\Models\Transactions','idgradetotals','idgradetotals');
+    }
 }

@@ -19,6 +19,7 @@ class TransactionsTable extends Migration
             $table->enum('type',['u','w','t']); //u =top up, w = withdraw, t = transfers 
             $table->double('amount');
             $table->integer('idtransfers')->nullable();
+            $table->integer('idfrom')->nullable();
             $table->softDeletes();
             $table->timestamps();
         });

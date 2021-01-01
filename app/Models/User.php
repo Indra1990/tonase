@@ -28,7 +28,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function grade_totals()
     {
-        return $this->hasOne('App\Models\GradeTotals','idusers');
+        return $this->belongsTo('App\Models\GradeTotals','idusers','idusers');
     }
 
     public function getJWTIdentifier()

@@ -14,7 +14,7 @@ class AuthController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login','register']]);
+        $this->middleware('jwt.verify', ['except' => ['login','register']]);
     }
 
     public function login(Request  $request)
@@ -47,7 +47,7 @@ class AuthController extends Controller
     {    
         $validator = Validator::make($request->all(), [
             'name' => 'required|string',
-            'email' => 'required|string|email|max:100|unique:users',
+            'email' => 'required|email|unique:users',
             'password' => 'required|string|min:6',
         ]);
 
@@ -61,26 +61,22 @@ class AuthController extends Controller
         $register->password =  Hash::make($request->password);
         $register->save();
         
-        $credentials = $request->only('email', 'password');
-
-        if ($token = $this->guard()->attempt($credentials)) {
-            
-            $data_token = $this->respondWithToken($token);
-            log_activity('Register Successfully',url()->current(), $request->method() ,Auth::user()->idusers);
-            $this->created_grade_totals(Auth::user()->idusers,0);
-            return response()->json([
-                'user' => $register,
-                'data_token' =>  $data_token 
-            ], 200);
-        }
+        log_activity('Register Successfully',url()->current(), $request->method() ,Auth::user()->idusers);
+        $this->created_grade_totals(Auth::user()->idusers,0);
         
+        $token = JWTAuth::fromUser($register);
+
+        return response()->json([
+                    'user' => $register,
+                    'data_token' =>  $token 
+        ], 200);    
     }
 
 
     public function logout(Request $request) {
         log_activity('Logout Successfully',url()->current(), $request->method() ,Auth::user()->idusers);
         Auth::logout();
-        return response()->json(['message' => 'User successfully signed out']);
+        return response()->json(['message' => 'successfully signed out']);
     }
 
     protected function created_grade_totals($idusers,$total)

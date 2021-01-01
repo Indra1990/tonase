@@ -16,4 +16,14 @@ class Transactions extends Model
     protected $fillable = [
         'idgradetotals', 'type', 'amount', 'idtransfers'
     ];
+
+    public function to_transfer()
+    {
+        return $this->belongsTo('App\Models\User','idtransfers','idusers');
+    }
+
+    public function from_transfer()
+    {
+        return $this->belongsTo('App\Models\User','idfrom','idusers');
+    }
 }
