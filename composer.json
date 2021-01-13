@@ -15,6 +15,7 @@
         "illuminate/support": "^8.20",
         "laravel/framework": "^8.12",
         "laravel/tinker": "^2.5",
+        "midtrans/midtrans-php": "^2.3",
         "tymon/jwt-auth": "^1.0"
     },
     "require-dev": {

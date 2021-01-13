@@ -8,7 +8,6 @@ use App\Models\GradeTotals;
 use App\Models\Transactions;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use phpDocumentor\Reflection\Types\Null_;
 
 class TransactionsController extends Controller
 {

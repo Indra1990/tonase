@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\LogActivitiesController;
 use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\OrderController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -55,4 +56,8 @@ Route::group(['middleware' => ['jwt.verify']], function () {
         //transaction
         Route::post('transaction', [TransactionsController::class, 'create_save']);
         Route::get('transaction/mutasi', [TransactionsController::class, 'get_mutasi']);
+
+        Route::post('orders', [OrderController::class, 'save_order']);
+        Route::get('orders/status/{order}', [OrderController::class, 'status_payment']);
+
 });
